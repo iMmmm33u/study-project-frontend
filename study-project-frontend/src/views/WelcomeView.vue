@@ -9,7 +9,9 @@
             <div style="margin-top: 10px;">在这里你可以学习如何使用Java，如何搭建网站，并且与Java之父密切交流</div>
         </div>
         <div style="width: 400px; background-color: white;">
-            <router-view/>
+            <transition name="el-fade-in-linear">
+                <router-view/>
+            </transition>
         </div>
     </div>
 </template>

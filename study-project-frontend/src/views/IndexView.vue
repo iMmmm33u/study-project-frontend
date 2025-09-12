@@ -1,9 +1,11 @@
 <template>
     <div>
-        欢迎进入学习平台
-    </div>
-    <div>
-        <el-button @click="logout" type="danger">退出登录</el-button>
+        <div>
+            欢迎进入学习平台
+        </div>
+        <div>
+            <el-button @click="logout" type="danger">退出登录</el-button>
+        </div>
     </div>
 </template>
 
