@@ -66,7 +66,8 @@
                             </el-input>
                         </el-form-item>
                         <el-form-item prop="password_repeat">
-                            <el-input v-model="form.password_repeat" :maxLength="16" type="password" placeholder="重复新密码">
+                            <el-input v-model="form.password_repeat" :maxLength="16" type="password"
+                                placeholder="重复新密码">
                                 <template #prefix>
                                     <el-icon>
                                         <Lock />
@@ -140,12 +141,15 @@ const onValidate = (prop, isValid) => {
 }
 
 const validateEmail = () => {
+    coldTime.value = 60;
     post('/api/auth/valid-reset-email', {
         email: form.email
     }, (message) => {
         ElMessage.success(message)
-        coldTime.value = 60
         setInterval(() => coldTime.value--, 1000)
+    }, (message) => { 
+        ElMessage.warning(message)
+        coldTime.value = 0
     })
 }
 
@@ -155,7 +159,7 @@ const startReset = () => {
             post('/api/auth/start-reset', {
                 email: form.email,
                 code: form.code
-            }, () => { 
+            }, () => {
                 active.value++
             })
         } else {
@@ -169,7 +173,7 @@ const doReset = () => {
         if (isValid) {
             post('/api/auth/do-reset', {
                 password: form.password
-            }, (message) => { 
+            }, (message) => {
                 ElMessage.success(message)
                 router.push('/')
             })

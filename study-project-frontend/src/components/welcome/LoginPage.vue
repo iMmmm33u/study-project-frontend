@@ -41,13 +41,15 @@
 </template>
 
 <script setup>
-import { post } from "@/net"
+import { post, get } from "@/net"
+import { useStore } from "@/stores"
 import { Lock, User } from "@element-plus/icons-vue"
 import { ElMessage } from "element-plus"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
+const store = useStore()
 
 const form = reactive({
     username: '',
@@ -65,17 +67,15 @@ const login = () => {
             remember: form.remember
         }, (message) => {
             ElMessage.success(message)
-            console.log('登录成功，准备跳转到 /index')
-            router.push('/index').then(() => {
-                console.log('路由跳转成功')
-            }).catch(err => {
-                console.error('路由跳转失败:', err)
+            get('/api/user/me', (message) => {
+                store.auth.user = message
+                router.push('/index')
+            }, () => {
+                store.auth.user = null
             })
         })
     }
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
